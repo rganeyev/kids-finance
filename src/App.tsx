@@ -10,7 +10,7 @@ function App() {
   const [isButtonPressed, setButtonPressed] = useState(false);
   const [currentBalance, setCurrentBalance] = useState(0);
   const [balanceShown, setBalanceShown] = useState(false);
-  const onUpdateBalance = useCallback((balance: number) => {
+  const onUpdateBalance = useCallback((balance: number, isUpdated: boolean) => {
     setButtonPressed(true);
     setCurrentBalance(balance);
   }, []);
