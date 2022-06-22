@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/kids-finance/static/css/main.1f26e30e.css",
+    "main.js": "/kids-finance/static/js/main.0ac3cf54.js",
+    "static/js/787.4fb7c9a6.chunk.js": "/kids-finance/static/js/787.4fb7c9a6.chunk.js",
+    "index.html": "/kids-finance/index.html",
+    "main.1f26e30e.css.map": "/kids-finance/static/css/main.1f26e30e.css.map",
+    "main.0ac3cf54.js.map": "/kids-finance/static/js/main.0ac3cf54.js.map",
+    "787.4fb7c9a6.chunk.js.map": "/kids-finance/static/js/787.4fb7c9a6.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.1f26e30e.css",
+    "static/js/main.0ac3cf54.js"
+  ]
+}
