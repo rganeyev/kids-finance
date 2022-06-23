@@ -22,7 +22,7 @@ function App() {
         width={width}
         height={height}
         recycle={false}
-        numberOfPieces={6000}
+        numberOfPieces={3000}
         onConfettiComplete={() => setBalanceShown(true)}
       />}
       <header className="App-header">
