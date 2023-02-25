@@ -1,47 +1,66 @@
-import React, { useCallback, useState } from 'react';
-import './App.css';
-import Confetti from 'react-confetti';
-import InputForm from './InputForm.react';
-import { useWindowSize } from 'react-use';
-import CurrentBalance from './CurrentBalance.react';
-import SelectUser from './SelectUser.react';
+import React, { useCallback, useState } from "react";
+import "./App.css";
+import Confetti from "react-confetti";
+import EarnButton from "./EarnButton.react";
+import { useWindowSize } from "react-use";
+import CurrentBalance from "./CurrentBalance.react";
+import SelectUser from "./SelectUser.react";
 
 enum State {
-  SELECT_USER = 0,
-  PRESS_BUTTON = 1,
+  PRESS_BUTTON = 0,
+  SELECT_USER,
   CONFETTI,
   BALANCE_SHOWN,
 }
 
 function App() {
   const { width, height } = useWindowSize();
-  const [currentState, setCurrentState] = useState<State>(State.SELECT_USER);
-  const [userName, setUserName] = useState<string | null>(null);
+  const [currentState, setCurrentState] = useState<State>(State.PRESS_BUTTON);
   const [currentBalance, setCurrentBalance] = useState<number>(0);
-  const onUpdateBalance = useCallback((balance: number) => {
-    setCurrentState(State.CONFETTI);
-    setCurrentBalance(balance);
-  }, [setCurrentBalance, setCurrentState]);
+  const onUpdateBalanceCallback = useCallback(
+    (balance: number) => {
+      setCurrentState(State.CONFETTI);
+      setCurrentBalance(balance);
+    },
+    [setCurrentBalance, setCurrentState]
+  );
 
-  const showBalanceCallback = useCallback(() => setCurrentState(State.BALANCE_SHOWN), [setCurrentState]);
-  const selectUserNameCallback = useCallback((name: string) => { setUserName(name); setCurrentState(State.PRESS_BUTTON); }, [setUserName]);
-
+  const showBalanceCallback = useCallback(
+    () => setCurrentState(State.BALANCE_SHOWN),
+    [setCurrentState]
+  );
+  const pressButtonCallback = useCallback(() => {
+    setCurrentState(State.SELECT_USER);
+  }, []);
 
   return (
     <div className="App">
-      <header className="App-header">{currentState === State.SELECT_USER && <SelectUser onSelectUser={selectUserNameCallback} />}
-        {(currentState === State.PRESS_BUTTON || currentState === State.CONFETTI) &&
-          <InputForm className={currentState === State.CONFETTI ? 'fadeOut' : 'fadeIn'} onSendForm={onUpdateBalance} userName={userName!} />
-        }
-        {currentState === State.BALANCE_SHOWN && <CurrentBalance value={currentBalance} />}
+      <header className="App-header">
+        {currentState === State.PRESS_BUTTON && (
+          <EarnButton callback={pressButtonCallback} />
+        )}
+        {(currentState === State.SELECT_USER ||
+          currentState === State.CONFETTI) && (
+          <SelectUser
+            onSendForm={onUpdateBalanceCallback}
+            cssClass={
+              currentState === State.SELECT_USER ? "fade-in" : "fade-out"
+            }
+          />
+        )}
+        {currentState === State.BALANCE_SHOWN && (
+          <CurrentBalance value={currentBalance} />
+        )}
       </header>
-      {currentState === State.CONFETTI && <Confetti
-        width={width}
-        height={height}
-        recycle={false}
-        numberOfPieces={3000}
-        onConfettiComplete={showBalanceCallback}
-      />}
+      {currentState === State.CONFETTI && (
+        <Confetti
+          width={width}
+          height={height}
+          recycle={false}
+          numberOfPieces={3000}
+          onConfettiComplete={showBalanceCallback}
+        />
+      )}
     </div>
   );
 }
