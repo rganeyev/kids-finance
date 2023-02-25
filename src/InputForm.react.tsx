@@ -1,22 +1,23 @@
-import React, { useCallback } from 'react';
+import { useCallback } from 'react';
 import Button from '@mui/material/Button';
 
 type Props = {
     onSendForm: (balance: number, isUpdated: boolean) => void;
-    className: string | undefined
+    className: string | undefined;
+    userName: string;
 };
 
-export default function InputForm({ onSendForm, className }: Props) {
+export default function InputForm({ onSendForm, className, userName }: Props) {
     const onEarn = useCallback(async () => {
         const requestOptions = {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ name: 'Samira' })
+            body: JSON.stringify({ name: userName })
         };
         const response = await fetch('https://backend.gcrm.online/api/v1/finance/', requestOptions);
         const data = await response.json();
         onSendForm(data.balance, data.is_updated);
-    }, [onSendForm]);
+    }, [onSendForm, userName]);
     return <div className={className}>
         <Button variant="contained" onClick={onEarn}>Earn £1</Button>
     </div>;
