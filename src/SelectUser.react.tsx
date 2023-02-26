@@ -39,7 +39,7 @@ export default function SelectUser({ onSendForm, cssClass }: Props) {
       <Button
         color="success"
         variant="contained"
-        onClick={() => onEarn("Samira")}
+        onClick={() => onEarn("Emin")}
       >
         Emin
       </Button>
